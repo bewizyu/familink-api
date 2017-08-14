@@ -1,8 +1,22 @@
 const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const config = require('config');
+const log = require('./src/helpers/logger.helper');
 
 const app = express();
 
 const PORT = parseInt(process.env.PORT, 10) || 8080;
+
+// don't show log in test environment
+if (config.util.getEnv('NODE_ENV') !== 'test') {
+  app.use(morgan('combined'));
+}
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: 'application/json' }));
 
 /**
  * CORS configurations
@@ -38,5 +52,7 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Example app listening on port 3000!');
+  log.info(`Running on port: ${PORT}`);
 });
+
+module.exports = app;
