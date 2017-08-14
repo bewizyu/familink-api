@@ -1,10 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+
 const config = require('config');
+
 const log = require('./src/helpers/logger.helper');
 const dbHelper = require('./src/helpers/db.helper');
-
 
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 8080;
@@ -16,8 +17,6 @@ if (config.util.getEnv('NODE_ENV') !== 'test') {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
-app.use(bodyParser.json({ type: 'application/json' }));
 
 // Database initalize connection
 dbHelper.initDatabaseConnection();
@@ -42,9 +41,7 @@ app.all('/*', (req, res, next) => {
 /**
  * Hello world
  */
-app.get('/hello', (req, res) => {
-  res.send('Hello test!');
-});
+app.use('/', require('./src/routes/api.routes'));
 
 /**
  * Undefined routes return 404 http code
