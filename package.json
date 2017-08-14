@@ -27,6 +27,7 @@
     "body-parser": "^1.17.2",
     "config": "^1.26.2",
     "express": "^4.15.4",
+    "mongoose": "^4.10.8",
     "morgan": "^1.8.2",
     "winston": "^2.3.1"
   },

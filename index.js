@@ -3,9 +3,10 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const config = require('config');
 const log = require('./src/helpers/logger.helper');
+const dbHelper = require('./src/helpers/db.helper');
+
 
 const app = express();
-
 const PORT = parseInt(process.env.PORT, 10) || 8080;
 
 // don't show log in test environment
@@ -17,6 +18,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json' }));
+
+// Database initalize connection
+dbHelper.initDatabaseConnection();
 
 /**
  * CORS configurations
