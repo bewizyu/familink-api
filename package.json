@@ -4,9 +4,10 @@
   "description": "Training api project for the familink mobile application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "lint": "eslint ./src ./index.js --ext .js"
+    "test": "mocha --timeout 10000",
+    "lint": "eslint ./src ./index.js --ext .js",
+    "start": "SET NODE_ENV=pod && node index.js",
+    "start:dev": "SET NODE_ENV=dev && node index.js"
   },
   "repository": {
     "type": "git",
@@ -23,11 +24,18 @@
   },
   "homepage": "https://github.com/bewizyu/familink-api#readme",
   "dependencies": {
-    "express": "^4.15.4"
+    "body-parser": "^1.17.2",
+    "config": "^1.26.2",
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
+    "chai": "^4.1.1",
+    "chai-http": "^3.0.0",
     "eslint": "^4.4.1",
     "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.5.0"
   }
 }
