@@ -2,6 +2,8 @@ const express = require('express');
 
 const app = express();
 
+const PORT = parseInt(process.env.PORT, 10) || 8080;
+
 /**
  * CORS configurations
  */
@@ -35,6 +37,6 @@ app.use((req, res) => {
   });
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('Example app listening on port 3000!');
 });
