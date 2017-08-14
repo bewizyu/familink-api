@@ -1,0 +1,33 @@
+{
+  "name": "familink-api",
+  "version": "1.0.0-beta.0",
+  "description": "Training api project for the familink mobile application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "lint": "eslint ./src ./index.js --ext .js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bewizyu/familink-api.git"
+  },
+  "keywords": [
+    "Node",
+    "Express"
+  ],
+  "author": "Nicolas Hodicq <nhodicq@bewizyu.com> (https://www.linkedin.com/in/nicolas-hodicq-707bb14b/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bewizyu/familink-api/issues"
+  },
+  "homepage": "https://github.com/bewizyu/familink-api#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.4.1",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}
