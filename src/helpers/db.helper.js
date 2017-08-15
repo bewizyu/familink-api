@@ -7,8 +7,10 @@ const options = {
   replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
 };
 
+let db;
+
 /**
- * Init the database connection. Bind the
+ * Init the database connection and log events
  */
 function initDatabaseConnection() {
   if (appHelper.isProd()) {
@@ -18,12 +20,27 @@ function initDatabaseConnection() {
 
   mongoose.connect(process.env.MONGODB_ADDON_URI, options);
 
-  const db = mongoose.connection;
+  // Use native promises
+  mongoose.Promise = global.Promise;
+
+  db = mongoose.connection;
   db.on('error', (err) => {
     log.error('Database connection error', err);
   });
+
+  db.once('open', () => {
+    log.info('Connection with database succeeded.');
+  });
+}
+
+function getDB() {
+  if (!db) {
+    throw new Error('DB not initialized');
+  }
+  return db;
 }
 
 module.exports = {
   initDatabaseConnection,
+  getDB,
 };
