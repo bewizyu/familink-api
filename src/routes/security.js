@@ -7,9 +7,9 @@ const userServices = require('../users/user.services');
 const JWT_SECRET = process.env.JWT_SECRET || 'defaultSecret';
 log.info('JWT_SECRET', JWT_SECRET);
 
-function generateToken(login) {
+function generateToken(phone) {
   const payload = {
-    login,
+    phone,
   };
   return jwt.sign(payload, JWT_SECRET, { expiresIn: config.security.jwt.expiresIn });
 }
@@ -30,7 +30,7 @@ function checkAuthenticated(req, res, next) {
     try {
       const payload = validateToken(authHeader.split(' ')[1]);
       log.debug('checkAuthenticated payload', payload);
-      userServices.getUserByLogin(payload.login)
+      userServices.getUserByPhone(payload.phone)
         .then((user) => {
           if (!user) {
             throw new Error();
@@ -47,8 +47,8 @@ function checkAuthenticated(req, res, next) {
   }
 }
 
-function doLogin(login, password) {
-  return userServices.getUserByLogin(login)
+function doLogin(phone, password) {
+  return userServices.getUserByPhone(phone)
     .then((user) => {
       if (!user) {
         throw new Error('User not found');

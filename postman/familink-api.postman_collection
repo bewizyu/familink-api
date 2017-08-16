@@ -25,7 +25,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"login\": \"nhodicq@bewizyu.com\",\n\t\"password\": \"testpass\"\n}"
+							"raw": "{\n   \"phone\": \"0600000000\",\n   \"password\":\"0000\",\n   \"firstName\": \"Niko\",\n   \"lastName\": \"Hodicq\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"testProfile\"\n}"
 						},
 						"description": ""
 					},
@@ -57,7 +57,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"login\": \"nhodicq@bewizyu.com\",\n\t\"password\": \"testpass\"\n}"
+							"raw": "{\n\t\"phone\": \"0600000000\",\n\t\"password\": \"0000\"\n}"
 						},
 						"description": ""
 					},
