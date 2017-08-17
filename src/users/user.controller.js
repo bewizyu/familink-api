@@ -54,6 +54,24 @@ function forgottenPassord(req, res) {
     });
 }
 
+function updateUser(req, res) {
+  userServices.updateUser(
+    req.user._id,
+    req.body.firstName,
+    req.body.lastName,
+    req.body.email,
+    req.body.profile,
+  )
+    .then((user) => {
+      res.status(200).json(exportUser(user));
+    })
+    .catch((e) => {
+      const message = e.message || 'Internal server error';
+      const status = e.message ? 400 : 500;
+      res.status(status).json({ message });
+    });
+}
+
 function getUsers(req, res) {
   userServices.getUsers()
     .then((users) => {
@@ -64,12 +82,10 @@ function getUsers(req, res) {
     });
 }
 
-function updateUsers() {}
-
 module.exports = {
   signIn,
   logIn,
   forgottenPassord,
   getUsers,
-  updateUsers,
+  updateUser,
 };

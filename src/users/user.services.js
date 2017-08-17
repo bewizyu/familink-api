@@ -14,8 +14,33 @@ function createUser(phone, password, firstName, lastName, email, profile) {
     });
 }
 
-function updateUser() {
+function updateUser(id, firstName, lastName, email, profile) {
+  const update = {};
+  if (firstName) {
+    update.firstName = firstName;
+  }
+  if (lastName) {
+    update.lastName = lastName;
+  }
+  if (email) {
+    update.email = email;
+  }
+  if (profile) {
+    update.profile = profile;
+  }
 
+  return new Promise((resolve, reject) => {
+    UserModel.findByIdAndUpdate(
+      id,
+      { $set: update },
+      { new: true, runValidators: true },
+      (err, user) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(user);
+      });
+  });
 }
 
 function getUsers() {

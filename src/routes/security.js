@@ -35,7 +35,7 @@ function checkAuthenticated(req, res, next) {
           if (!user) {
             throw new Error();
           }
-          req.user = _.pick(user, ['_id', 'login']);
+          req.user = _.pick(user, ['_id', 'phone']);
           next();
         })
         .catch(() => {
