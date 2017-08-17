@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const uniqueValidator = require('mongoose-unique-validator');
 const Email = require('mongoose-type-mail');
 
+const profilesConstantes = require('../profiles/profiles.constantes');
+
 const Schema = mongoose.Schema;
 
 const SALT_WORK_FACTOR = 10;
@@ -35,6 +37,7 @@ const UserSchema = new Schema({
   profile: {
     type: String,
     required: true,
+    enum: profilesConstantes.PROFILES,
   },
   createdAt: {
     type: Date,
