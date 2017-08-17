@@ -1,8 +1,8 @@
 const log = require('../helpers/logger.helper');
 const UserModel = require('./user.model');
 
-function createUser(login, password) {
-  const newUser = new UserModel({ login, password });
+function createUser(phone, password, firstName, lastName, email, profile) {
+  const newUser = new UserModel({ phone, password, firstName, lastName, email, profile });
   return newUser.save()
     .then((user) => {
       log.info('User created', user);
@@ -27,8 +27,8 @@ function getUsers() {
     });
 }
 
-function getUserByLogin(login) {
-  return UserModel.findOne({ login })
+function getUserByPhone(phone) {
+  return UserModel.findOne({ phone })
     .then((user) => {
       log.info('Get User by login', user);
       return Promise.resolve(user);
@@ -42,5 +42,5 @@ function getUserByLogin(login) {
 module.exports = {
   createUser,
   getUsers,
-  getUserByLogin,
+  getUserByPhone,
 };

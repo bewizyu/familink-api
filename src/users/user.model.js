@@ -9,12 +9,30 @@ const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema({
-  login: {
-    type: Email,
+  phone: {
+    type: String,
     unique: true,
     required: true,
+    maxlength: 10,
+    minlength: 10,
   },
   password: {
+    type: String,
+    required: true,
+    maxlength: 4,
+    minlength: 4,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+  },
+  email: {
+    type: Email,
+  },
+  profile: {
     type: String,
     required: true,
   },
