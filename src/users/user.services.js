@@ -14,6 +14,10 @@ function createUser(phone, password, firstName, lastName, email, profile) {
     });
 }
 
+function updateUser() {
+
+}
+
 function getUsers() {
   const query = UserModel.find();
   return query.exec()
@@ -41,6 +45,7 @@ function getUserByPhone(phone) {
 
 module.exports = {
   createUser,
+  updateUser,
   getUsers,
   getUserByPhone,
 };
