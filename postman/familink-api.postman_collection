@@ -25,7 +25,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n   \"phone\": \"0600000000\",\n   \"password\":\"0000\",\n   \"firstName\": \"Niko\",\n   \"lastName\": \"Hodicq\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"testProfile\"\n}"
+							"raw": "{\n   \"phone\": \"0600000002\",\n   \"password\":\"0000\",\n   \"firstName\": \"Niko\",\n   \"lastName\": \"Hodicq\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"FAMILLE\"\n}"
 						},
 						"description": ""
 					},
@@ -64,6 +64,38 @@
 					"response": []
 				},
 				{
+					"name": "Forgot Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{uri}}/public/forgot-password",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"0600000000\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "Get Users",
 					"request": {
 						"url": "{{uri}}/secured/users",
@@ -84,6 +116,29 @@
 							"mode": "raw",
 							"raw": "{\n\t\"login\": \"nhodicq@bewizyu.com\",\n\t\"password\": \"testpass\"\n}"
 						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profiles",
+			"description": "",
+			"item": [
+				{
+					"name": "Profiles",
+					"request": {
+						"url": "{{uri}}/public/profiles",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
 						"description": ""
 					},
 					"response": []

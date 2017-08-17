@@ -66,8 +66,21 @@ function doLogin(phone, password) {
     .catch(e => Promise.reject(e));
 }
 
+function forgottenPassord(phone) {
+  return userServices.getUserByPhone(phone)
+    .then((user) => {
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      return Promise.resolve();
+    })
+    .catch(e => Promise.reject(e));
+}
+
 module.exports = {
   checkAuthenticated,
   generateToken,
   doLogin,
+  forgottenPassord,
 };

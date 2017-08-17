@@ -42,7 +42,17 @@ function logIn(req, res) {
     });
 }
 
-function logOut() {}
+function forgottenPassord(req, res) {
+  security.forgottenPassord(req.body.phone)
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch((e) => {
+      const message = e.message || 'Internal server error';
+      const status = e.message ? 400 : 500;
+      res.status(status).json({ message });
+    });
+}
 
 function getUsers(req, res) {
   userServices.getUsers()
@@ -59,7 +69,7 @@ function updateUsers() {}
 module.exports = {
   signIn,
   logIn,
-  logOut,
+  forgottenPassord,
   getUsers,
   updateUsers,
 };
