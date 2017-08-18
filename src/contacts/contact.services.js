@@ -2,7 +2,6 @@ const Chance = require('chance');
 const _ = require('lodash');
 
 const profilesConstantes = require('../profiles/profiles.constantes');
-const us = require('../users/user.services');
 
 function checkGenerateNumbers(length = 20) {
   if (length < 0) return 0;
