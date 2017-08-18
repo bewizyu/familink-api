@@ -2,7 +2,7 @@ const Chance = require('chance');
 const _ = require('lodash');
 
 const profilesConstantes = require('../profiles/profiles.constantes');
-const userServices = require('../users/user.services');
+const us = require('../users/user.services');
 
 function checkGenerateNumbers(length = 20) {
   if (length < 0) return 0;
@@ -37,13 +37,6 @@ function generateMockContacts(length = 20) {
   return contacts;
 }
 
-function getContacts(userPhone) {
-  return userServices.getUserByPhone(userPhone)
-    .then(user => Promise.resolve(user.contacts))
-    .catch(e => Promise.reject(e));
-}
-
 module.exports = {
   generateMockContacts,
-  getContacts,
 };

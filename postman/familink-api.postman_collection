@@ -12,7 +12,7 @@
 			"description": "",
 			"item": [
 				{
-					"name": "Create user",
+					"name": "Create user (defaut contacts 20)",
 					"request": {
 						"url": "{{uri}}/public/sign-in",
 						"method": "POST",
@@ -26,6 +26,69 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n   \"phone\": \"0600000002\",\n   \"password\":\"0000\",\n   \"firstName\": \"Niko\",\n   \"lastName\": \"Hodicq\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"FAMILLE\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create user (define contacts numbers)",
+					"request": {
+						"url": {
+							"raw": "{{uri}}/public/sign-in?contactsLength=201",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"public",
+								"sign-in"
+							],
+							"query": [
+								{
+									"key": "contactsLength",
+									"value": "201",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"phone\": \"0600000001\",\n   \"password\":\"0000\",\n   \"firstName\": \"Niko\",\n   \"lastName\": \"Hodicq\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"FAMILLE\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"url": "{{uri}}/secured/users",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"firstName\": \"NikoUpdate\",\n   \"lastName\": \"HodicqUpdate\",\n   \"email\": \"nhodicq-update@bewizyu.com\",\n   \"profile\": \"MEDECIN\"\n}"
 						},
 						"description": ""
 					},
@@ -57,7 +120,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"phone\": \"0600000000\",\n\t\"password\": \"0000\"\n}"
+							"raw": "{\n\t\"phone\": \"0600000001\",\n\t\"password\": \"0000\"\n}"
 						},
 						"description": ""
 					},
@@ -89,7 +152,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"phone\": \"0600000000\"\n}"
+							"raw": "{\n\t\"phone\": \"0600000002\"\n}"
 						},
 						"description": ""
 					},
@@ -139,6 +202,37 @@
 							}
 						],
 						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "contacts",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Contacts",
+					"request": {
+						"url": "{{uri}}/secured/users/contacts",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\": \"nhodicq@bewizyu.com\",\n\t\"password\": \"testpass\"\n}"
+						},
 						"description": ""
 					},
 					"response": []

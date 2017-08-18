@@ -71,6 +71,12 @@ function getUsers() {
     });
 }
 
+function getContacts(userPhone) {
+  return this.getUserByPhone(userPhone)
+    .then(user => Promise.resolve(user.contacts))
+    .catch(e => Promise.reject(e));
+}
+
 function getUserByPhone(phone) {
   return UserModel.findOne({ phone })
     .then((user) => {
@@ -91,4 +97,5 @@ module.exports = {
   updateUser,
   getUsers,
   getUserByPhone,
+  getContacts,
 };
