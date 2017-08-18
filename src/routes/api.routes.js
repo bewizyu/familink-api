@@ -24,4 +24,6 @@ router.post('/public/forgot-password', userRoutes.forgottenPassord);
 router.get('/secured/users', userRoutes.getUsers);
 router.put('/secured/users', userRoutes.updateUser);
 
+router.get('/secured/users/contacts', userRoutes.getContacts);
+
 module.exports = router;

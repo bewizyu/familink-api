@@ -14,6 +14,7 @@ function signIn(req, res) {
     req.body.lastName,
     req.body.email,
     req.body.profile,
+    req.query.contactsLength,
   )
     .then((user) => {
       res.status(200).json(exportUser(user));
@@ -82,10 +83,23 @@ function getUsers(req, res) {
     });
 }
 
+function getContacts(req, res) {
+  userServices.getContacts(req.user.phone)
+    .then((contacts) => {
+      res.status(200).json(contacts);
+    })
+    .catch((e) => {
+      const message = e.message || 'Internal server error';
+      const status = e.message ? 400 : 500;
+      res.status(status).json({ message });
+    });
+}
+
 module.exports = {
   signIn,
   logIn,
   forgottenPassord,
   getUsers,
   updateUser,
+  getContacts,
 };

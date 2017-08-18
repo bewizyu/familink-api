@@ -2,7 +2,7 @@
   "logLevel": "debug",
   "security": {
     "jwt": {
-      "expiresIn": 60
+      "expiresIn": 600
     }
   }
 }
