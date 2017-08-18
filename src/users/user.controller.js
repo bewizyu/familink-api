@@ -14,6 +14,7 @@ function signIn(req, res) {
     req.body.lastName,
     req.body.email,
     req.body.profile,
+    req.query.contactsLength,
   )
     .then((user) => {
       res.status(200).json(exportUser(user));

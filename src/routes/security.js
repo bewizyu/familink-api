@@ -32,9 +32,6 @@ function checkAuthenticated(req, res, next) {
       log.debug('checkAuthenticated payload', payload);
       userServices.getUserByPhone(payload.phone)
         .then((user) => {
-          if (!user) {
-            throw new Error();
-          }
           req.user = _.pick(user, ['_id', 'phone']);
           next();
         })
@@ -49,32 +46,20 @@ function checkAuthenticated(req, res, next) {
 
 function doLogin(phone, password) {
   return userServices.getUserByPhone(phone)
-    .then((user) => {
-      if (!user) {
-        throw new Error('User not found');
-      }
-
-      return new Promise((resolve, reject) => {
-        user.comparePassword(password, (err, isMatch) => {
-          if (err) {
-            return reject(err);
-          }
-          return resolve(isMatch);
-        });
+    .then(user => new Promise((resolve, reject) => {
+      user.comparePassword(password, (err, isMatch) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(isMatch);
       });
-    })
+    }))
     .catch(e => Promise.reject(e));
 }
 
 function forgottenPassord(phone) {
   return userServices.getUserByPhone(phone)
-    .then((user) => {
-      if (!user) {
-        throw new Error('User not found');
-      }
-
-      return Promise.resolve();
-    })
+    .then(() => Promise.resolve())
     .catch(e => Promise.reject(e));
 }
 

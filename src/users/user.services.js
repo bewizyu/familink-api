@@ -1,8 +1,23 @@
 const log = require('../helpers/logger.helper');
 const UserModel = require('./user.model');
+const contactService = require('../contacts/contact.services');
 
-function createUser(phone, password, firstName, lastName, email, profile) {
-  const newUser = new UserModel({ phone, password, firstName, lastName, email, profile });
+function createUser(phone, password, firstName, lastName, email, profile, contactsLength) {
+  let cl;
+  if (contactsLength) {
+    cl = parseInt(contactsLength, 10);
+  }
+
+  const newUser = new UserModel({
+    phone,
+    password,
+    firstName,
+    lastName,
+    email,
+    profile,
+    contacts: contactService.generateMockContacts(cl),
+  });
+
   return newUser.save()
     .then((user) => {
       log.info('User created', user);
@@ -59,6 +74,9 @@ function getUsers() {
 function getUserByPhone(phone) {
   return UserModel.findOne({ phone })
     .then((user) => {
+      if (!user) {
+        throw new Error('User not found');
+      }
       log.info('Get User by login', user);
       return Promise.resolve(user);
     })
