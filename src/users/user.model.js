@@ -13,7 +13,6 @@ const SALT_WORK_FACTOR = 10;
 const ContactSchema = new Schema({
   phone: {
     type: String,
-    unique: true,
     required: true,
     maxlength: 10,
     minlength: 10,
@@ -31,6 +30,7 @@ const ContactSchema = new Schema({
   profile: {
     type: String,
     required: true,
+    enum: profilesConstantes.PROFILES,
   },
   gravatar: {
     type: String,
@@ -56,8 +56,6 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-    maxlength: 4,
-    minlength: 4,
   },
   firstName: {
     type: String,

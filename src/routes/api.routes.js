@@ -25,5 +25,8 @@ router.get('/secured/users', userRoutes.getUsers);
 router.put('/secured/users', userRoutes.updateUser);
 
 router.get('/secured/users/contacts', userRoutes.getContacts);
+router.delete('/secured/users/contacts/:idContact', userRoutes.deleteContact);
+router.put('/secured/users/contacts/:idContact', userRoutes.updateContact);
+router.post('/secured/users/contacts', userRoutes.createContact);
 
 module.exports = router;
