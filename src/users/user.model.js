@@ -10,6 +10,41 @@ const Schema = mongoose.Schema;
 
 const SALT_WORK_FACTOR = 10;
 
+const ContactSchema = new Schema({
+  phone: {
+    type: String,
+    unique: true,
+    required: true,
+    maxlength: 10,
+    minlength: 10,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+  },
+  email: {
+    type: Email,
+  },
+  profile: {
+    type: String,
+    required: true,
+  },
+  gravatar: {
+    type: String,
+  },
+  isFamilinkUser: {
+    type: Boolean,
+    required: true,
+  },
+  isEmergencyUser: {
+    type: Boolean,
+    required: true,
+  },
+});
+
 const UserSchema = new Schema({
   phone: {
     type: String,
@@ -43,40 +78,7 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  contacts: [{
-    phone: {
-      type: String,
-      unique: true,
-      required: true,
-      maxlength: 10,
-      minlength: 10,
-    },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-    },
-    email: {
-      type: Email,
-    },
-    profile: {
-      type: String,
-      required: true,
-    },
-    gravatar: {
-      type: String,
-    },
-    isFamilinkUser: {
-      type: Boolean,
-      required: true,
-    },
-    isEmergencyUser: {
-      type: Boolean,
-      required: true,
-    },
-  }],
+  contacts: [ContactSchema],
 });
 
 UserSchema.pre('save', function save(next) {
