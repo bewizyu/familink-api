@@ -2,6 +2,7 @@ const _ = require('lodash');
 const log = require('../helpers/logger.helper');
 const UserModel = require('./user.model');
 const contactService = require('../contacts/contact.services');
+const profileConstants = require('../profiles/profiles.constantes');
 
 function validatePassword(password) {
   if (!password) {
@@ -99,10 +100,10 @@ function addContact(
   firstName,
   lastName,
   email,
-  profile,
+  profile = profileConstants.PROFILE_FAMILLE,
   gravatar,
-  isFamilinkUser,
-  isEmergencyUser,
+  isFamilinkUser = false,
+  isEmergencyUser = false,
 ) {
   return this.getUserByPhone(userPhone)
     .then((user) => {
