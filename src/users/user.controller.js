@@ -7,23 +7,29 @@ function exportUser(user) {
 }
 
 function signIn(req, res) {
-  userServices.createUser(
-    req.body.phone,
-    req.body.password,
-    req.body.firstName,
-    req.body.lastName,
-    req.body.email,
-    req.body.profile,
-    req.query.contactsLength,
-  )
-    .then((user) => {
-      res.status(200).json(exportUser(user));
-    })
-    .catch((e) => {
-      const message = e.message || 'Internal server error';
-      const status = e.message ? 400 : 500;
-      res.status(status).json({ message });
-    });
+  try {
+    userServices.createUser(
+      req.body.phone,
+      req.body.password,
+      req.body.firstName,
+      req.body.lastName,
+      req.body.email,
+      req.body.profile,
+      req.query.contactsLength,
+    )
+      .then((user) => {
+        res.status(200).json(exportUser(user));
+      })
+      .catch((e) => {
+        const message = e.message || 'Internal server error';
+        const status = e.message ? 400 : 500;
+        res.status(status).json({ message });
+      });
+  } catch (e) {
+    const message = e.message || 'Internal server error';
+    const status = e.message ? 400 : 500;
+    res.status(status).json({ message });
+  }
 }
 
 function logIn(req, res) {

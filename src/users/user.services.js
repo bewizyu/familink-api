@@ -2,21 +2,8 @@ const _ = require('lodash');
 const log = require('../helpers/logger.helper');
 const UserModel = require('./user.model');
 const contactService = require('../contacts/contact.services');
+const security = require('../routes/security');
 
-function validatePassword(password) {
-  if (!password) {
-    throw new Error('Password must be defined');
-  }
-
-  if (password.length !== 4) {
-    throw new Error('Password length must be equal to 4');
-  }
-  if (_.isNumber(password)) {
-    throw new Error('Password must be number');
-  }
-
-  return true;
-}
 
 function createUser(phone, password, firstName, lastName, email, profile, contactsLength) {
   let cl;
@@ -24,8 +11,7 @@ function createUser(phone, password, firstName, lastName, email, profile, contac
     cl = parseInt(contactsLength, 10);
   }
 
-
-  const newUser = validatePassword(password) && new UserModel({
+  const newUser = security.validatePassword(password) && new UserModel({
     phone,
     password,
     firstName,
