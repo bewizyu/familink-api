@@ -1,6 +1,9 @@
+const _ = require('lodash');
 const log = require('../helpers/logger.helper');
 const UserModel = require('./user.model');
 const contactService = require('../contacts/contact.services');
+const security = require('../routes/security');
+
 
 function createUser(phone, password, firstName, lastName, email, profile, contactsLength) {
   let cl;
@@ -8,7 +11,7 @@ function createUser(phone, password, firstName, lastName, email, profile, contac
     cl = parseInt(contactsLength, 10);
   }
 
-  const newUser = new UserModel({
+  const newUser = security.validatePassword(password) && new UserModel({
     phone,
     password,
     firstName,
@@ -77,6 +80,86 @@ function getContacts(userPhone) {
     .catch(e => Promise.reject(e));
 }
 
+function addContact(
+  userPhone,
+  phone,
+  firstName,
+  lastName,
+  email,
+  profile,
+  gravatar,
+  isFamilinkUser,
+  isEmergencyUser,
+) {
+  return this.getUserByPhone(userPhone)
+    .then((user) => {
+      user.contacts.push({
+        phone,
+        firstName,
+        lastName,
+        email,
+        profile,
+        gravatar,
+        isFamilinkUser,
+        isEmergencyUser,
+      });
+      return user.save()
+        .then(savedUser => Promise.resolve(user.contacts[savedUser.contacts.length - 1]));
+    })
+    .catch(e => Promise.reject(e));
+}
+
+function deleteContact(userPhone, idContact) {
+  return this.getUserByPhone(userPhone)
+    .then((user) => {
+      user.contacts.id(idContact).remove();
+      return user.save({ validateBeforeSave: false });
+    })
+    .catch(e => Promise.reject(e));
+}
+
+function updateContact(
+  userPhone,
+  idContact,
+  firstName,
+  lastName,
+  email,
+  profile,
+  gravatar,
+  isFamilinkUser,
+  isEmergencyUser,
+) {
+  const update = {};
+  if (firstName) {
+    update.firstName = firstName;
+  }
+  if (lastName) {
+    update.lastName = lastName;
+  }
+  if (email) {
+    update.email = email;
+  }
+  if (profile) {
+    update.profile = profile;
+  }
+  if (_.isString(gravatar) && gravatar) {
+    update.gravatar = gravatar;
+  }
+  if (_.isBoolean(isFamilinkUser)) {
+    update.isFamilinkUser = isFamilinkUser;
+  }
+  if (_.isBoolean(isEmergencyUser)) {
+    update.isEmergencyUser = isEmergencyUser;
+  }
+
+  return UserModel
+    .where({ phone: userPhone, 'contacts._id': idContact })
+    .update({ $set: {
+      'contacts.$': update,
+    } })
+    .exec();
+}
+
 function getUserByPhone(phone) {
   return UserModel.findOne({ phone })
     .then((user) => {
@@ -98,4 +181,7 @@ module.exports = {
   getUsers,
   getUserByPhone,
   getContacts,
+  addContact,
+  deleteContact,
+  updateContact,
 };

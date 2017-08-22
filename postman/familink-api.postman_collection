@@ -70,6 +70,44 @@
 					"response": []
 				},
 				{
+					"name": "Create user (define O contacts)",
+					"request": {
+						"url": {
+							"raw": "{{uri}}/public/sign-in?contactsLength=0",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"public",
+								"sign-in"
+							],
+							"query": [
+								{
+									"key": "contactsLength",
+									"value": "0",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"phone\": \"0600000005\",\n   \"password\":\"0000\",\n   \"firstName\": \"Niko\",\n   \"lastName\": \"Hodicq\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"FAMILLE\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "Update User",
 					"request": {
 						"url": "{{uri}}/secured/users",
@@ -120,7 +158,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"phone\": \"0600000001\",\n\t\"password\": \"0000\"\n}"
+							"raw": "{\n\t\"phone\": \"0600000002\",\n\t\"password\": \"0000\"\n}"
 						},
 						"description": ""
 					},
@@ -214,6 +252,20 @@
 			"item": [
 				{
 					"name": "Get Contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"if  (jsonData.length > 0) {",
+									"    postman.setEnvironmentVariable(\"idcontact\", jsonData[0]._id);   ",
+									"}"
+								]
+							}
+						}
+					],
 					"request": {
 						"url": "{{uri}}/secured/users/contacts",
 						"method": "GET",
@@ -232,6 +284,81 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"login\": \"nhodicq@bewizyu.com\",\n\t\"password\": \"testpass\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact",
+					"request": {
+						"url": "{{uri}}/secured/users/contacts/{{idcontact}}",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact",
+					"request": {
+						"url": "{{uri}}/secured/users/contacts/{{idcontact}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"phone\": \"0666666666\",\n   \"firstName\": \"NikoUpdateContact\",\n   \"lastName\": \"HodicqUpdateContact\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"MEDECIN\",\n   \"gravatar\" : \"\",\n   \"isFamilinkUser\" : false,\n   \"isEmergencyUser\": true\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact",
+					"request": {
+						"url": "{{uri}}/secured/users/contacts",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"phone\": \"0777777777\",\n   \"firstName\": \"Antonin\",\n   \"lastName\": \"L'Écolier\",\n   \"email\": \"alecolier@bewizyu.com\",\n   \"profile\": \"MEDECIN\",\n   \"gravatar\" : \"\",\n   \"isFamilinkUser\" : false,\n   \"isEmergencyUser\": true\n}"
 						},
 						"description": ""
 					},
