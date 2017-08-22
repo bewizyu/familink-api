@@ -44,21 +44,6 @@ function checkAuthenticated(req, res, next) {
   }
 }
 
-function validatePassword(password) {
-  if (!password) {
-    throw new Error('Password must be defined');
-  }
-
-  if (password.length !== 4) {
-    throw new Error('Password length must be equal to 4');
-  }
-  if (_.isNumber(password)) {
-    throw new Error('Password must be number');
-  }
-
-  return true;
-}
-
 function doLogin(phone, password) {
   return userServices.getUserByPhone(phone)
     .then(user => new Promise((resolve, reject) => {
@@ -83,5 +68,4 @@ module.exports = {
   generateToken,
   doLogin,
   forgottenPassord,
-  validatePassword,
 };
