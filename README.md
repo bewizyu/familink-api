@@ -1,7 +1,7 @@
 # Familink API
 
 ## Description
-Training api project for the familink mobile application
+Training api project for the familink mobile application.
 
 ## API Documenation
 
