@@ -127,6 +127,7 @@ function updateContact(req, res) {
   userServices.updateContact(
     req.user.phone,
     req.params.idContact,
+    req.body.phone,
     req.body.firstName,
     req.body.lastName,
     req.body.email,

@@ -135,6 +135,7 @@ function deleteContact(userPhone, idContact) {
 function updateContact(
   userPhone,
   idContact,
+  phone,
   firstName,
   lastName,
   email,
@@ -143,34 +144,35 @@ function updateContact(
   isFamilinkUser,
   isEmergencyUser,
 ) {
-  const update = {};
+  const set = {};
+  if (phone) {
+    set['contacts.$.phone'] = phone;
+  }
   if (firstName) {
-    update.firstName = firstName;
+    set['contacts.$.firstName'] = firstName;
   }
   if (lastName) {
-    update.lastName = lastName;
+    set['contacts.$.lastName'] = lastName;
   }
   if (email) {
-    update.email = email;
+    set['contacts.$.email'] = email;
   }
   if (profile) {
-    update.profile = profile;
+    set['contacts.$.profile'] = profile;
   }
   if (_.isString(gravatar) && gravatar) {
-    update.gravatar = gravatar;
+    set['contacts.$.gravatar'] = gravatar;
   }
   if (_.isBoolean(isFamilinkUser)) {
-    update.isFamilinkUser = isFamilinkUser;
+    set['contacts.$.isFamilinkUser'] = isFamilinkUser;
   }
   if (_.isBoolean(isEmergencyUser)) {
-    update.isEmergencyUser = isEmergencyUser;
+    set['contacts.$.isEmergencyUser'] = isEmergencyUser;
   }
 
   return UserModel
     .where({ phone: userPhone, 'contacts._id': idContact })
-    .update({ $set: {
-      'contacts.$': update,
-    } })
+    .update({ $set: set })
     .exec();
 }
 
