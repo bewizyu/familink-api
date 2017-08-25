@@ -39,7 +39,7 @@ function logIn(req, res) {
         const token = security.generateToken(req.body.phone);
         res.status(200).json({ token });
       } else {
-        res.status(401).json({ message: 'Password is not valid' });
+        res.status(400).json({ message: 'Password is not valid' });
       }
     })
     .catch((e) => {
