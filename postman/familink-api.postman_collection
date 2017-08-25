@@ -63,7 +63,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n   \"phone\": \"0600000001\",\n   \"password\":\"0000\",\n   \"firstName\": \"Niko\",\n   \"lastName\": \"Hodicq\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"FAMILLE\"\n}"
+							"raw": "{\n   \"phone\": \"0600000050\",\n   \"password\":\"0000\",\n   \"firstName\": \"Niko\",\n   \"lastName\": \"Hodicq\",\n   \"email\": \"nhodicq@bewizyu.com\",\n   \"profile\": \"FAMILLE\"\n}"
 						},
 						"description": ""
 					},
@@ -200,6 +200,31 @@
 					"name": "Get Users",
 					"request": {
 						"url": "{{uri}}/secured/users",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\": \"nhodicq@bewizyu.com\",\n\t\"password\": \"testpass\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Authenticated",
+					"request": {
+						"url": "{{uri}}/secured/users/current",
 						"method": "GET",
 						"header": [
 							{
