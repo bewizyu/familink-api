@@ -89,6 +89,16 @@ function getUsers(req, res) {
     });
 }
 
+function getAuthenticatedUser(req, res) {
+  userServices.getUserById(req.user._id)
+    .then((user) => {
+      res.status(200).json(exportUser(user));
+    })
+    .catch(() => {
+      res.status(500).json({ message: 'Internal server error' });
+    });
+}
+
 function getContacts(req, res) {
   userServices.getContacts(req.user.phone)
     .then((contacts) => {
@@ -164,6 +174,7 @@ module.exports = {
   logIn,
   forgottenPassord,
   getUsers,
+  getAuthenticatedUser,
   updateUser,
   getContacts,
   deleteContact,

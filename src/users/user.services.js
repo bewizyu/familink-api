@@ -174,6 +174,17 @@ function updateContact(
     .exec();
 }
 
+function getUserById(id) {
+  return UserModel.findOne({ _id: id })
+    .then((user) => {
+      if (!user) {
+        throw new Error('User not found');
+      }
+      return Promise.resolve(user);
+    })
+    .catch(e => Promise.reject(e));
+}
+
 function getUserByPhone(phone) {
   return UserModel.findOne({ phone })
     .then((user) => {
@@ -194,6 +205,7 @@ module.exports = {
   updateUser,
   getUsers,
   getUserByPhone,
+  getUserById,
   getContacts,
   addContact,
   deleteContact,
