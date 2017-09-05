@@ -2,7 +2,7 @@
   "logLevel": "error",
   "security": {
     "jwt": {
-      "expiresIn": 900
+      "expiresIn": 300
     }
   }
 }
