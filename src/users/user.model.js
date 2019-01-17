@@ -77,6 +77,8 @@ const UserSchema = new Schema({
     default: Date.now,
   },
   contacts: [ContactSchema],
+}, {
+  usePushEach: true,
 });
 
 UserSchema.pre('save', function save(next) {

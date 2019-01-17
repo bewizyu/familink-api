@@ -3,8 +3,9 @@ const log = require('./logger.helper');
 const appHelper = require('./application.helper');
 
 const options = {
-  server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
-  replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
 };
 
 let db;
@@ -18,7 +19,9 @@ function initDatabaseConnection() {
     options.pass = process.env.MONGODB_ADDON_PASSWORD;
   }
 
-  mongoose.connect(process.env.MONGODB_ADDON_URI, options);
+  const uri = `${process.env.MONGODB_ADDON_URI}/${process.env.MONGODB_ADDON_DB}`;
+
+  mongoose.connect(uri, options);
 
   // Use native promises
   mongoose.Promise = global.Promise;

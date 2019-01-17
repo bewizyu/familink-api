@@ -1,17 +1,20 @@
-const winston = require('winston');
+const { createLogger, format, transports } = require('winston');
 const config = require('config');
 
-const level = config.logLevel || 'debug';
+const { combine, timestamp, splat, printf, colorize } = format;
 
-const logger = new winston.Logger({
-  transports: [
-    new winston.transports.Console({
-      level,
-      timestamp() {
-        return (new Date()).toISOString();
-      },
+module.exports = createLogger({
+  level: config.logLevel || 'debug',
+  format: combine(
+    colorize({ all: true }),
+    timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss',
     }),
+    printf(info => `${info.timestamp} ${info.level}: ${info.message}`),
+    splat(),
+  ),
+  transports: [
+    new transports.Console(),
   ],
 });
 
-module.exports = logger;

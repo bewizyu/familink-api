@@ -1,49 +1,51 @@
 {
-  "name"           : "familink-api",
-  "version"        : "1.0.0-beta.0",
-  "description"    : "Training api project for the familink mobile application",
-  "main"           : "index.js",
-  "scripts"        : {
-    "test"      : "mocha --timeout 10000",
-    "lint"      : "eslint ./src ./index.js --ext .js",
-    "start"     : "node index.js",
+  "name": "familink-api",
+  "version": "1.0.0-beta.0",
+  "description": "Training api project for the familink mobile application",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --timeout 10000",
+    "lint": "eslint ./src ./index.js --ext .js",
+    "start": "node index.js",
     "start:prod": "NODE_ENV=prod node index.js",
-    "start:dev" : "NODE_ENV=dev MONGODB_ADDON_URI=http://localhost node index.js"
+    "start:dev": "NODE_ENV=dev MONGODB_ADDON_URI=mongodb://localhost MONGODB_ADDON_DB=familink node index.js",
+    "start:debug": "NODE_ENV=dev MONGODB_ADDON_URI=mongodb://localhost MONGODB_ADDON_DB=familink nodemon $NODE_DEBUG_OPTION index.js"
   },
-  "repository"     : {
+  "repository": {
     "type": "git",
-    "url" : "git+https://github.com/bewizyu/familink-api.git"
+    "url": "git+https://github.com/bewizyu/familink-api.git"
   },
-  "keywords"       : [
+  "keywords": [
     "Node",
     "Express"
   ],
-  "author"         : "Nicolas Hodicq <nhodicq@bewizyu.com> (https://www.linkedin.com/in/nicolas-hodicq-707bb14b/)",
-  "license"        : "MIT",
-  "bugs"           : {
+  "author": "Nicolas Hodicq <nhodicq@bewizyu.com> (https://www.linkedin.com/in/nicolas-hodicq-707bb14b/)",
+  "license": "MIT",
+  "bugs": {
     "url": "https://github.com/bewizyu/familink-api/issues"
   },
-  "homepage"       : "https://github.com/bewizyu/familink-api#readme",
-  "dependencies"   : {
-    "bcrypt"                   : "3.0.3",
-    "body-parser"              : "^1.17.2",
-    "chance"                   : "^1.0.10",
-    "config"                   : "^1.26.2",
-    "express"                  : "^4.15.4",
-    "jsonwebtoken"             : "^7.4.2",
-    "lodash"                   : "^4.17.4",
-    "mongoose"                 : "^4.10.8",
-    "mongoose-type-mail"       : "^1.0.0",
-    "mongoose-unique-validator": "^1.0.5",
-    "morgan"                   : "^1.8.2",
-    "winston"                  : "^2.3.1"
+  "homepage": "https://github.com/bewizyu/familink-api#readme",
+  "dependencies": {
+    "bcrypt": "3.0.3",
+    "body-parser": "^1.17.2",
+    "chance": "^1.0.10",
+    "config": "^1.26.2",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.2",
+    "lodash": "^4.17.4",
+    "mongoose": "^5.4.4",
+    "mongoose-type-mail": "^1.0.0",
+    "mongoose-unique-validator": "^2.0.2",
+    "morgan": "^1.8.2",
+    "winston": "^3.1.0"
   },
   "devDependencies": {
-    "chai"                     : "^4.1.1",
-    "chai-http"                : "^3.0.0",
-    "eslint"                   : "^4.4.1",
+    "chai": "^4.1.1",
+    "chai-http": "^3.0.0",
+    "eslint": "^4.4.1",
     "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import"     : "^2.7.0",
-    "mocha"                    : "^3.5.0"
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.5.0",
+    "nodemon": "^1.18.9"
   }
 }
