@@ -89,6 +89,7 @@ function getUsers() {
 }
 
 function getContacts(userPhone) {
+  log.info('Get contact for phone\'s user', userPhone);
   return this.getUserByPhone(userPhone)
     .then(user => Promise.resolve(user.contacts))
     .catch(e => Promise.reject(e));
@@ -105,31 +106,51 @@ function addContact(
   isFamilinkUser = false,
   isEmergencyUser = false,
 ) {
-  return this.getUserByPhone(userPhone)
-    .then((user) => {
-      user.contacts.push({
-        phone,
-        firstName,
-        lastName,
-        email,
-        profile,
-        gravatar,
-        isFamilinkUser,
-        isEmergencyUser,
+  return new Promise((resolve, reject) => {
+    UserModel.findOneAndUpdate(
+      { phone: userPhone },
+      {
+        $push: {
+          contacts: {
+            phone,
+            firstName,
+            lastName,
+            email,
+            profile,
+            gravatar,
+            isFamilinkUser,
+            isEmergencyUser,
+          },
+        },
+      },
+      (error, success) => {
+        if (error) {
+          log.error('Error when adding contact', error);
+          reject(error);
+        } else {
+          resolve(success);
+        }
       });
-      return user.save()
-        .then(savedUser => Promise.resolve(user.contacts[savedUser.contacts.length - 1]));
-    })
-    .catch(e => Promise.reject(e));
+  });
 }
 
 function deleteContact(userPhone, idContact) {
-  return this.getUserByPhone(userPhone)
-    .then((user) => {
-      user.contacts.id(idContact).remove();
-      return user.save({ validateBeforeSave: false });
-    })
-    .catch(e => Promise.reject(e));
+  return new Promise((resolve, reject) => {
+    UserModel.findOneAndUpdate(
+      { phone: userPhone },
+      {
+        $pull: { contacts: { _id: idContact } },
+      },
+      { safe: true, upsert: true },
+      (error, success) => {
+        if (error) {
+          reject(error);
+        } else {
+          log.debug(`Delete contact succeed ${idContact}, ${success.toString()}`);
+          resolve(success);
+        }
+      });
+  });
 }
 
 function updateContact(
@@ -142,8 +163,7 @@ function updateContact(
   profile,
   gravatar,
   isFamilinkUser,
-  isEmergencyUser,
-) {
+  isEmergencyUser) {
   const set = {};
   if (phone) {
     set['contacts.$.phone'] = phone;
@@ -172,7 +192,7 @@ function updateContact(
 
   return UserModel
     .where({ phone: userPhone, 'contacts._id': idContact })
-    .update({ $set: set })
+    .updateOne({ $set: set })
     .exec();
 }
 
@@ -188,12 +208,14 @@ function getUserById(id) {
 }
 
 function getUserByPhone(phone) {
+  log.debug('Get user by phone', phone);
   return UserModel.findOne({ phone })
     .then((user) => {
       if (!user) {
+        log.debug('Get user by phone not found', phone);
         throw new Error('User not found');
       }
-      log.info('Get User by login', user);
+      log.info('Get user by phone', phone, user);
       return Promise.resolve(user);
     })
     .catch((e) => {

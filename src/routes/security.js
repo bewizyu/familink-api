@@ -36,10 +36,12 @@ function checkAuthenticated(req, res, next) {
           next();
         })
         .catch(() => {
-          res.status(401).json({ message: 'Security: User extract from security token not found' });
+          res.status(401)
+            .json({ message: 'Security: User extract from security token not found' });
         });
     } catch (e) {
-      res.status(401).json({ message: 'Security token invalid or expired' });
+      res.status(401)
+        .json({ message: 'Security token invalid or expired' });
     }
   }
 }
