@@ -18,17 +18,20 @@ function signIn(req, res) {
       req.query.contactsLength,
     )
       .then((user) => {
-        res.status(200).json(exportUser(user));
+        res.status(200)
+          .json(exportUser(user));
       })
       .catch((e) => {
         const message = e.message || 'Internal server error';
         const status = e.message ? 400 : 500;
-        res.status(status).json({ message });
+        res.status(status)
+          .json({ message });
       });
   } catch (e) {
     const message = e.message || 'Internal server error';
     const status = e.message ? 400 : 500;
-    res.status(status).json({ message });
+    res.status(status)
+      .json({ message });
   }
 }
 
@@ -37,27 +40,32 @@ function logIn(req, res) {
     .then((isMatch) => {
       if (isMatch) {
         const token = security.generateToken(req.body.phone);
-        res.status(200).json({ token });
+        res.status(200)
+          .json({ token });
       } else {
-        res.status(400).json({ message: 'Password is not valid' });
+        res.status(400)
+          .json({ message: 'Password is not valid' });
       }
     })
     .catch((e) => {
       const message = e.message || 'Internal server error';
       const status = e.message ? 400 : 500;
-      res.status(status).json({ message });
+      res.status(status)
+        .json({ message });
     });
 }
 
 function forgottenPassord(req, res) {
   security.forgottenPassord(req.body.phone)
     .then(() => {
-      res.status(204).send();
+      res.status(204)
+        .send();
     })
     .catch((e) => {
       const message = e.message || 'Internal server error';
       const status = e.message ? 400 : 500;
-      res.status(status).json({ message });
+      res.status(status)
+        .json({ message });
     });
 }
 
@@ -70,56 +78,66 @@ function updateUser(req, res) {
     req.body.profile,
   )
     .then((user) => {
-      res.status(200).json(exportUser(user));
+      res.status(200)
+        .json(exportUser(user));
     })
     .catch((e) => {
       const message = e.message || 'Internal server error';
       const status = e.message ? 400 : 500;
-      res.status(status).json({ message });
+      res.status(status)
+        .json({ message });
     });
 }
 
 function getUsers(req, res) {
   userServices.getUsers()
     .then((users) => {
-      res.status(200).json(_.map(users, user => exportUser(user)));
+      res.status(200)
+        .json(_.map(users, user => exportUser(user)));
     })
     .catch(() => {
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500)
+        .json({ message: 'Internal server error' });
     });
 }
 
 function getAuthenticatedUser(req, res) {
   userServices.getUserById(req.user._id)
     .then((user) => {
-      res.status(200).json(exportUser(user));
+      res.status(200)
+        .json(exportUser(user));
     })
     .catch(() => {
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500)
+        .json({ message: 'Internal server error' });
     });
 }
 
 function getContacts(req, res) {
   userServices.getContacts(req.user.phone)
     .then((contacts) => {
-      res.status(200).json(contacts);
+      res.status(200)
+        .json(contacts);
     })
     .catch((e) => {
       const message = e.message || 'Internal server error';
       const status = e.message ? 400 : 500;
-      res.status(status).json({ message });
+      res.status(status)
+        .json({ message });
     });
 }
 
 function deleteContact(req, res) {
   userServices.deleteContact(req.user.phone, req.params.idContact)
     .then(() => {
-      res.status(204).send();
+      res.status(204)
+        .send();
     })
     .catch((e) => {
       const message = e.message || 'Internal server error';
       const status = e.message ? 400 : 500;
-      res.status(status).json({ message });
+      res.status(status)
+        .json({ message });
     });
 }
 
@@ -138,12 +156,17 @@ function updateContact(req, res) {
     req.body.isEmergencyUser,
   )
     .then(() => {
-      res.status(204).send();
+      res.status(204)
+        .send();
     })
     .catch((e) => {
-      const message = e.message || 'Internal server error';
+      let message = e.message || 'Internal server error';
+      if (e.name === 'CastError' && e.kind === 'ObjectId') {
+        message = `idContact not found : ${req.params.idContact}`;
+      }
       const status = e.message ? 400 : 500;
-      res.status(status).json({ message });
+      res.status(status)
+        .json({ message });
     });
 }
 
@@ -161,12 +184,14 @@ function createContact(req, res) {
     req.body.isEmergencyUser,
   )
     .then((contact) => {
-      res.status(200).json(contact);
+      res.status(200)
+        .json(contact);
     })
     .catch((e) => {
       const message = e.message || 'Internal server error';
       const status = e.message ? 400 : 500;
-      res.status(status).json({ message });
+      res.status(status)
+        .json({ message });
     });
 }
 
