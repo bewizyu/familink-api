@@ -6,7 +6,7 @@ const Email = require('mongoose-type-mail');
 
 const profilesConstantes = require('../profiles/profiles.constantes');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const SALT_WORK_FACTOR = 10;
 

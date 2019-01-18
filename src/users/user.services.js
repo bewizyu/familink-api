@@ -71,7 +71,8 @@ function updateUser(id, firstName, lastName, email, profile) {
           reject(err);
         }
         resolve(user);
-      });
+      },
+    );
   });
 }
 
@@ -130,7 +131,8 @@ function addContact(
         } else {
           resolve(success);
         }
-      });
+      },
+    );
   });
 }
 
@@ -149,7 +151,8 @@ function deleteContact(userPhone, idContact) {
           log.debug(`Delete contact succeed ${idContact}, ${success.toString()}`);
           resolve(success);
         }
-      });
+      },
+    );
   });
 }
 
@@ -163,7 +166,8 @@ function updateContact(
   profile,
   gravatar,
   isFamilinkUser,
-  isEmergencyUser) {
+  isEmergencyUser,
+) {
   const set = {};
   if (phone) {
     set['contacts.$.phone'] = phone;
