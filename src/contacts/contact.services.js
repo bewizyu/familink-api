@@ -5,7 +5,7 @@ const profilesConstantes = require('../profiles/profiles.constantes');
 
 function checkGenerateNumbers(length = 20) {
   if (length < 0) return 0;
-  else if (length > 200) return 200;
+  if (length > 200) return 200;
   return length;
 }
 
