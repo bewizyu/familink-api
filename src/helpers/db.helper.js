@@ -14,12 +14,17 @@ let db;
  * Init the database connection and log events
  */
 function initDatabaseConnection() {
+  let uri = `${process.env.MONGODB_ADDON_URI}`;
+
   if (appHelper.isProd()) {
     options.user = process.env.MONGODB_ADDON_USER;
     options.pass = process.env.MONGODB_ADDON_PASSWORD;
   }
 
-  const uri = `${process.env.MONGODB_ADDON_URI}/${process.env.MONGODB_ADDON_DB}`;
+  if (appHelper.isDev()) {
+    uri = `${uri}/${process.env.MONGODB_ADDON_DB}`;
+  }
+
 
   mongoose.connect(uri, options);
 
