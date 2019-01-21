@@ -8,14 +8,14 @@ function validatePassword(password) {
   if (!password) {
     throw new Error('Password must be defined');
   }
-
+  
   if (password.length !== 4) {
     throw new Error('Password length must be equal to 4');
   }
   if (_.isNumber(password)) {
     throw new Error('Password must be number');
   }
-
+  
   return true;
 }
 
@@ -24,7 +24,7 @@ function createUser(phone, password, firstName, lastName, email, profile, contac
   if (contactsLength) {
     cl = parseInt(contactsLength, 10);
   }
-
+  
   const newUser = validatePassword(password) && new UserModel({
     phone,
     password,
@@ -34,7 +34,7 @@ function createUser(phone, password, firstName, lastName, email, profile, contac
     profile,
     contacts: contactService.generateMockContacts(cl),
   });
-
+  
   return newUser.save()
     .then((user) => {
       log.info('User created', user);
@@ -60,7 +60,7 @@ function updateUser(id, firstName, lastName, email, profile) {
   if (profile) {
     update.profile = profile;
   }
-
+  
   return new Promise((resolve, reject) => {
     UserModel.findByIdAndUpdate(
       id,
@@ -102,9 +102,9 @@ function addContact(
   firstName,
   lastName,
   email,
-  profile = profileConstants.PROFILE_FAMILLE,
+  profile         = profileConstants.PROFILE_FAMILLE,
   gravatar,
-  isFamilinkUser = false,
+  isFamilinkUser  = false,
   isEmergencyUser = false,
 ) {
   return new Promise((resolve, reject) => {
@@ -124,12 +124,16 @@ function addContact(
           },
         },
       },
+      {
+        new: true,
+      },
       (error, success) => {
         if (error) {
           log.error('Error when adding contact', error);
           reject(error);
         } else {
-          resolve(success);
+          log.debug(`Contact added for user (${userPhone})`);
+          resolve(success.contacts[success.contacts.length - 1]);
         }
       },
     );
@@ -193,7 +197,7 @@ function updateContact(
   if (_.isBoolean(isEmergencyUser)) {
     set['contacts.$.isEmergencyUser'] = isEmergencyUser;
   }
-
+  
   return UserModel
     .where({ phone: userPhone, 'contacts._id': idContact })
     .updateOne({ $set: set })
